@@ -1,17 +1,18 @@
-
+# ---------------------------------------------------------------------------------------------------------------------
 from time import sleep
 from hal.led import OnBoardLed
-from hal.stdout import StdOut
+from hal.stdout import UartOut
 from hal.real_time_clock import RealTimeClock, Timestamp
 from time import time, mktime
 from pferdinand.pferdinand import Pferdinand, Event
 from hal.constants import TIMER_TICK
-
+from hal.interfaces.istdout import StdOut
 from machine import Timer
+# ---------------------------------------------------------------------------------------------------------------------
 
 
 # Hardware Initialisieren...
-stdout: StdOut = StdOut()
+stdout: StdOut = UartOut()
 led: OnBoardLed = OnBoardLed()
 rtc: RealTimeClock = RealTimeClock()
 event_queue: list = []
@@ -47,7 +48,6 @@ timer.init(
 
 # Anwendung ausfuehren...
 while True:
-    
     if len(event_queue) > 0:
         led.on()
         event: Event = event_queue.pop()
@@ -55,4 +55,5 @@ while True:
             event
         )
         led.off()
+# ---------------------------------------------------------------------------------------------------------------------
 

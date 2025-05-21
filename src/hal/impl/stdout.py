@@ -1,8 +1,11 @@
+# ---------------------------------------------------------------------------------------------------------------------
 from machine import UART
 from machine import Pin
+from hal.interfaces.istdout import StdOut
+# ---------------------------------------------------------------------------------------------------------------------
 
-class StdOut:
-    
+class UartOut(StdOut):
+
     def __init__(self):
         # Initialisierung: UART
         # UART 0, TX=GPIO0 (Pin 1), RX=GPIO1 (Pin 2)
@@ -17,9 +20,10 @@ class StdOut:
             stop=1
         )
         pass
-    
+
     def write(self, msg: str) -> 'Self':
         self.__uart.write(msg)
         return self
-    
+
     pass
+# ---------------------------------------------------------------------------------------------------------------------
