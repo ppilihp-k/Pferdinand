@@ -1,0 +1,2 @@
+# Timertick in Milliseconds
+TIMER_TICK: int = 1000
