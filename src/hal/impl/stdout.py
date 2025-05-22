@@ -1,10 +1,10 @@
 # ---------------------------------------------------------------------------------------------------------------------
 from machine import UART
 from machine import Pin
-from hal.interfaces.istdout import StdOut
+from hal.interfaces.istdout import IStdOut
 # ---------------------------------------------------------------------------------------------------------------------
 
-class UartOut(StdOut):
+class UartOut(IStdOut):
 
     def __init__(self):
         # Initialisierung: UART

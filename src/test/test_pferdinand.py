@@ -47,7 +47,9 @@ class TestState(TestCase):
         )
         for i in range(0, 10):
             p.dispatch_event(
-                Event.time_tick().set_timestamp(time())
+                Event.time_tick().set_timestamp(
+                    Timestamp().from_tuple(localtime(time()))
+                )
             )
             # Pruefe, ob der aktive Zustand eingehalten wird.
             self.assertEqual(

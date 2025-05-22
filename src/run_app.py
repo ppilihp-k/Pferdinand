@@ -1,6 +1,6 @@
 # ---------------------------------------------------------------------------------------------------------------------
 from time import sleep
-from hal.led import OnBoardLed
+from hal.impl.led import OnBoardLed
 from hal.impl.stdout import UartOut
 from hal.interfaces.istdout import IStdOut
 from hal.interfaces.ireal_time_clock import IRealTimeClock
@@ -9,18 +9,25 @@ from hal.impl.digital_output import GpioDigitalOutput
 from hal.impl.real_time_clock import I2CReadTimeClock, RealTimeClock, Timestamp
 from time import time, mktime
 from pferdinand.pferdinand import Pferdinand, Event
-from hal.constants import TIMER_TICK
-from hal.interfaces.istdout import StdOut
+from hal.constants.constants import TIMER_TICK
 from machine import Timer
-from pferdinand.constants import PFERDINAND_DIGITAL_OUTPUT_PIN_NUMBER
+from pferdinand.constants import (
+    PFERDINAND_DIGITAL_OUTPUT_PIN_NUMBER,
+    PFERDINAND_ACTIVE_TIME_MS,
+    PFERDINAND_ACTIVATE_AT,
+    PFERDINAND_I2C_RTC_SDA_PIN,
+    PFERDINAND_I2C_RTC_SCL_PIN,
+    PFERDINAND_I2C_RTC_DEVICE_ADDRESS,
+)
 # ---------------------------------------------------------------------------------------------------------------------
-
 
 # Hardware Initialisieren...
 stdout: IStdOut = UartOut()
 led: OnBoardLed = OnBoardLed()
-rtc: IRealTimeClock = RealTimeClock().set_time(
-    I2CReadTimeClock().now()
+rtc: IRealTimeClock = I2CReadTimeClock(
+    sda_pin_number=PFERDINAND_I2C_RTC_SDA_PIN,
+    scl_pin_number=PFERDINAND_I2C_RTC_SCL_PIN,
+    i2c_address=PFERDINAND_I2C_RTC_DEVICE_ADDRESS,
 )
 digital_output_pin_0: IDigitalOutput = GpioDigitalOutput(
     PFERDINAND_DIGITAL_OUTPUT_PIN_NUMBER
@@ -31,7 +38,8 @@ event_queue: list = []
 def callback(t):
     event_queue.append(
         Event.time_tick().set_timestamp(
-            rtc.now().mktime()
+            rtc.now()
+        )
     )
     pass
 
@@ -41,11 +49,10 @@ app: Pferdinand = Pferdinand(
     stdout=stdout,
 ).set_active_at(
     Timestamp().from_tuple(
-        # (Jahr, Monat, Tag, Stunde, Minute, Sekunde, Wochentag)
-        (0, 0, 0, 17, 17, 0, 0)
+        PFERDINAND_ACTIVATE_AT
     )
 ).set_active_time(
-    5000
+    PFERDINAND_ACTIVE_TIME_MS
 )
 
 # Weitere Hardware initialisieren...

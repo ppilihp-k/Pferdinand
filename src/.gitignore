@@ -1,5 +1,5 @@
-# Created by https://www.toptal.com/developers/gitignore/api/python,macos,linux,windows,vim
-# Edit at https://www.toptal.com/developers/gitignore?templates=python,macos,linux,windows,vim
+# Created by https://www.toptal.com/developers/gitignore/api/python,vim,linux,macos
+# Edit at https://www.toptal.com/developers/gitignore?templates=python,vim,linux,macos
 
 ### Linux ###
 *~
@@ -241,30 +241,5 @@ tags
 # Persistent undo
 [._]*.un~
 
-### Windows ###
-# Windows thumbnail cache files
-Thumbs.db
-Thumbs.db:encryptable
-ehthumbs.db
-ehthumbs_vista.db
+# End of https://www.toptal.com/developers/gitignore/api/python,vim,linux,macos
 
-# Dump file
-*.stackdump
-
-# Folder config file
-[Dd]esktop.ini
-
-# Recycle Bin used on file shares
-$RECYCLE.BIN/
-
-# Windows Installer files
-*.cab
-*.msi
-*.msix
-*.msm
-*.msp
-
-# Windows shortcuts
-*.lnk
-
-# End of https://www.toptal.com/developers/gitignore/api/python,macos,linux,windows,vim

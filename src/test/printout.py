@@ -1,8 +1,8 @@
 # ---------------------------------------------------------------------------------------------------------------------
-from hal.interfaces.istdout import StdOut
+from hal.interfaces.istdout import IStdOut
 # ---------------------------------------------------------------------------------------------------------------------
 
-class PrintOut(StdOut):
+class PrintOut(IStdOut):
 
     def __init__(self):
         pass

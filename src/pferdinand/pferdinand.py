@@ -1,6 +1,6 @@
 # ---------------------------------------------------------------------------------------------------------------------
 from hal.interfaces.types import Timestamp
-from hal.interfaces.istdout import StdOut
+from hal.interfaces.istdout import IStdOut
 from hal.interfaces.idigital_output import IDigitalOutput
 from time import localtime
 
@@ -12,20 +12,18 @@ class Event:
 
     def __init__(self, event_id: int):
         self.__event_id: int = event_id
-        self.__timestamp: int = 0
+        self.__timestamp: Timestamp = 0
         pass
 
     def event_id(self) -> int:
         return self.__event_id
 
-    def set_timestamp(self, timestamp: int) -> 'Self':
+    def set_timestamp(self, timestamp: Timestamp) -> 'Self':
         self.__timestamp = timestamp
         return self
 
     def timestamp(self) -> Timestamp:
-        return Timestamp().from_tuple(
-            localtime(self.__timestamp)
-        )
+        return self.__timestamp
 
     @staticmethod
     def time_tick() -> 'Event':
@@ -43,9 +41,9 @@ class Pferdinand:
     WAITING: int = 0
     ACTIVE: int = 1
 
-    def __init__(self, digital_output: IDigitalOutput, stdout: StdOut):
+    def __init__(self, digital_output: IDigitalOutput, stdout: IStdOut):
         self.__digital_output: IDigitalOutput = digital_output
-        self.__stdout: StdOut = stdout
+        self.__stdout: IStdOut = stdout
 
         self.__active_at: Timestamp = Timestamp()
         self.__active_time_ms: int = 3000
@@ -65,6 +63,7 @@ class Pferdinand:
     def __handle_waiting_state(self, event: Event) -> int:
         if Event.TIME_TICK == event.event_id():
             timestamp: Timestamp = event.timestamp()
+            print(timestamp)
             if timestamp.hours() == self.__active_at.hours() and timestamp.minutes() == self.__active_at.minutes() and timestamp.seconds() == self.__active_at.seconds():
                 self.__stdout.write('Switch to Active Mode.')
                 self.__activated_at = timestamp.mktime()
