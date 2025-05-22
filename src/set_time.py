@@ -1,4 +1,8 @@
 # ---------------------------------------------------------------------------------------------------------------------
+from time import sleep
+from hal.impl.led import OnBoardLed
+from hal.impl.stdout import UartOut
+from hal.impl.real_time_clock import I2CReadTimeClock, RealTimeClock, Timestamp
 from pferdinand.constants import (
     PFERDINAND_DIGITAL_OUTPUT_PIN_NUMBER,
     PFERDINAND_ACTIVE_TIME_MS,
@@ -10,6 +14,7 @@ from pferdinand.constants import (
 # ---------------------------------------------------------------------------------------------------------------------
 
 led: OnBoardLed = OnBoardLed()
+stdout: IStdOut = UartOut()
 rtc: IRealTimeClock = I2CReadTimeClock(
     sda_pin_number=PFERDINAND_I2C_RTC_SDA_PIN,
     scl_pin_number=PFERDINAND_I2C_RTC_SCL_PIN,
@@ -18,13 +23,13 @@ rtc: IRealTimeClock = I2CReadTimeClock(
 rtc.set_time(
     Timestamp().from_tuple(
         # (Jahr, 	Monat, 	Tag, 	Stunde, Minute, Sekunde, 	Wochentag)
-        (25, 		11, 	22, 	23, 	50, 	30, 		7)
+        (25, 		11, 	22, 	23, 	55, 	30, 		7, 0)
     )
 )
 
 # spin...
 while 1:
-    print(a.now())
+    stdout.write(f'{rtc.now()}\n')
     sleep(1)
     led.on()
     sleep(1)

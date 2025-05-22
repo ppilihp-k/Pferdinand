@@ -53,7 +53,6 @@ class I2CReadTimeClock(IRealTimeClock):
     def set_time(self, timestamp: Timestamp) -> 'Self':
         # (Jahr, Monat, Tag, Stunde, Minute, Sekunde, Wochentag)
         ts = timestamp.to_tuple()
-        print(f'Convert {ts} to BCD')
         year: int = self.double_dabble(ts[0])
         month: int = self.double_dabble(ts[1])
         day: int = self.double_dabble(ts[2])
@@ -61,8 +60,6 @@ class I2CReadTimeClock(IRealTimeClock):
         minutes: int = self.double_dabble(ts[4])
         seconds: int = self.double_dabble(ts[5])
         weekday: int = self.double_dabble(ts[6])
-
-        print(f'Year: {year}, M:{month}, d:{day}, h:{hours}, m:{minutes}, s:{seconds}, wd:{weekday}')
 
         data: bytes = self.__read_timekeeping_registers()
         self.__i2c.writeto(

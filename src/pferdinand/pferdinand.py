@@ -62,10 +62,10 @@ class Pferdinand:
 
     def __handle_waiting_state(self, event: Event) -> int:
         if Event.TIME_TICK == event.event_id():
+            self.__stdout.write(f'Tick {event.timestamp()}.\n')
             timestamp: Timestamp = event.timestamp()
-            print(timestamp)
             if timestamp.hours() == self.__active_at.hours() and timestamp.minutes() == self.__active_at.minutes() and timestamp.seconds() == self.__active_at.seconds():
-                self.__stdout.write('Switch to Active Mode.')
+                self.__stdout.write('Switch to Active Mode.\n')
                 self.__activated_at = timestamp.mktime()
                 self.__digital_output.set(True)
                 return Pferdinand.ACTIVE
@@ -77,8 +77,9 @@ class Pferdinand:
 
     def __handle_active_state(self, event: Event) -> int:
         if Event.TIME_TICK == event.event_id():
+            self.__stdout.write(f'Tick {event.timestamp()}.\n')
             if (event.timestamp().mktime() - self.__activated_at) >= (self.__active_time_ms / 1000):
-                self.__stdout.write('Switch to Waiting Mode.')
+                self.__stdout.write('Switch to Waiting Mode.\n')
                 self.__digital_output.set(False)
                 return Pferdinand.WAITING
             return Pferdinand.ACTIVE
