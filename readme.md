@@ -12,6 +12,10 @@ konform zu der MicroPython Spezifikation sein.
 MicroPython: https://docs.micropython.org/en/latest/library/
 Thonny: https://thonny.org 
 
+Das Skript "set_time.py" setzt eine Uhrzeit auf der externen RTC.
+
+Das Skript "run_app.py" fuehrt die App aus.
+
 ## test/
 Tests fuer den Source Code.
 Die Tests koennen auf jedem beliebigen Rechner ausgefuert werden.
