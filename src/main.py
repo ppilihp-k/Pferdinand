@@ -1,20 +1,29 @@
 # ---------------------------------------------------------------------------------------------------------------------
 from time import sleep
 from hal.led import OnBoardLed
-from hal.stdout import UartOut
+from hal.impl.stdout import UartOut
+from hal.interfaces.istdout import IStdOut
+from hal.interfaces.ireal_time_clock import IRealTimeClock
+from hal.interfaces.idigital_output import IDigitalOutput
+from hal.impl.digital_output import GpioDigitalOutput
 from hal.real_time_clock import RealTimeClock, Timestamp
 from time import time, mktime
 from pferdinand.pferdinand import Pferdinand, Event
 from hal.constants import TIMER_TICK
 from hal.interfaces.istdout import StdOut
 from machine import Timer
+from pferdinand.constants import PFERDINAND_DIGITAL_OUTPUT_PIN_NUMBER
 # ---------------------------------------------------------------------------------------------------------------------
 
 
 # Hardware Initialisieren...
 stdout: StdOut = UartOut()
 led: OnBoardLed = OnBoardLed()
-rtc: RealTimeClock = RealTimeClock()
+rtc: IRealTimeClock = RealTimeClock()
+digital_output_pin_0: IDigitalOutput = GpioDigitalOutput(
+    PFERDINAND_DIGITAL_OUTPUT_PIN_NUMBER
+)
+
 event_queue: list = []
 
 def callback(t):
@@ -27,7 +36,8 @@ def callback(t):
 
 # Anwendung bauen...
 app: Pferdinand = Pferdinand(
-    stdout=stdout
+    digital_output=digital_output_pin_0,
+    stdout=stdout,
 ).set_active_at(
     Timestamp().from_tuple(
         # (Jahr, Monat, Tag, Stunde, Minute, Sekunde, Wochentag)

@@ -1,6 +1,7 @@
 # ---------------------------------------------------------------------------------------------------------------------
 from hal.interfaces.types import Timestamp
 from hal.interfaces.istdout import StdOut
+from hal.interfaces.idigital_output import IDigitalOutput
 from time import localtime
 
 # ---------------------------------------------------------------------------------------------------------------------
@@ -42,7 +43,8 @@ class Pferdinand:
     WAITING: int = 0
     ACTIVE: int = 1
 
-    def __init__(self, stdout: StdOut):
+    def __init__(self, digital_output: IDigitalOutput, stdout: StdOut):
+        self.__digital_output: IDigitalOutput = digital_output
         self.__stdout: StdOut = stdout
 
         self.__active_at: Timestamp = Timestamp()
@@ -66,15 +68,19 @@ class Pferdinand:
             if timestamp.hours() == self.__active_at.hours() and timestamp.minutes() == self.__active_at.minutes() and timestamp.seconds() == self.__active_at.seconds():
                 self.__stdout.write('Switch to Active Mode.')
                 self.__activated_at = timestamp.mktime()
+                self.__digital_output.set(True)
                 return Pferdinand.ACTIVE
+            self.__digital_output.set(False)
             return Pferdinand.WAITING
         else:
+            self.__digital_output.set(False)
             return Pferdinand.WAITING
 
     def __handle_active_state(self, event: Event) -> int:
         if Event.TIME_TICK == event.event_id():
             if (event.timestamp().mktime() - self.__activated_at) >= (self.__active_time_ms / 1000):
                 self.__stdout.write('Switch to Waiting Mode.')
+                self.__digital_output.set(False)
                 return Pferdinand.WAITING
             return Pferdinand.ACTIVE
         else:
