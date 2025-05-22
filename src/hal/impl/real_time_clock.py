@@ -2,13 +2,32 @@
 import machine
 from time import time, gmtime, mktime
 from hal.types import Timestamp
+from hal.interfaces.ireal_time_clock import IRealTimeClock
 # ---------------------------------------------------------------------------------------------------------------------
 
-class RealTimeClock:
+class I2CReadTimeClock(IRealTimeClock):
+
+    def __init__(self):
+        pass
+
+    def set_time(self, timestamp: Timestamp) -> 'Self':
+        return self
+
+    def now(self) -> Timestamp:
+        return Timestamp()
+
+    pass
+
+# ---------------------------------------------------------------------------------------------------------------------
+
+class RealTimeClock(IRealTimeClock):
 
     def __init__(self):
         self.__rtc = machine.RTC()
         pass
+
+    def set_time(self, timestamp: Timestamp) -> 'Self':
+        return self
 
     def now(self) -> Timestamp:
         return Timestamp().from_tuple(

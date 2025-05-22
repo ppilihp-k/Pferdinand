@@ -6,7 +6,7 @@ from hal.interfaces.istdout import IStdOut
 from hal.interfaces.ireal_time_clock import IRealTimeClock
 from hal.interfaces.idigital_output import IDigitalOutput
 from hal.impl.digital_output import GpioDigitalOutput
-from hal.real_time_clock import RealTimeClock, Timestamp
+from hal.impl.real_time_clock import I2CReadTimeClock, RealTimeClock, Timestamp
 from time import time, mktime
 from pferdinand.pferdinand import Pferdinand, Event
 from hal.constants import TIMER_TICK
@@ -17,9 +17,11 @@ from pferdinand.constants import PFERDINAND_DIGITAL_OUTPUT_PIN_NUMBER
 
 
 # Hardware Initialisieren...
-stdout: StdOut = UartOut()
+stdout: IStdOut = UartOut()
 led: OnBoardLed = OnBoardLed()
-rtc: IRealTimeClock = RealTimeClock()
+rtc: IRealTimeClock = RealTimeClock().set_time(
+    I2CReadTimeClock().now()
+)
 digital_output_pin_0: IDigitalOutput = GpioDigitalOutput(
     PFERDINAND_DIGITAL_OUTPUT_PIN_NUMBER
 )
@@ -29,8 +31,7 @@ event_queue: list = []
 def callback(t):
     event_queue.append(
         Event.time_tick().set_timestamp(
-            time()
-        )
+            rtc.now().mktime()
     )
     pass
 
