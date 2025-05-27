@@ -70,8 +70,8 @@ class Pferdinand:
             #self.__stdout.write(f'Tick {event.timestamp()}.\n')
             timestamp: Timestamp = event.timestamp()
             if timestamp.hours() == self.__active_at.hours() and timestamp.minutes() == self.__active_at.minutes() and timestamp.seconds() == self.__active_at.seconds():
-                self.__stdout.write('Switch to Active Mode.\n')
-                self.__activated_at = timestamp.mktime()
+                self.__activated_at = int(timestamp.mktime())
+                self.__stdout.write(f'Switch to Active Mode. {self.__activated_at}, wait until {self.__activated_at + (self.__active_time_ms // 1000)}.\n')
                 self.__motor_up()
                 return Pferdinand.ACTIVE
             return Pferdinand.WAITING
@@ -89,8 +89,8 @@ class Pferdinand:
 
     def __handle_active_state(self, event: Event) -> int:
         if Event.TIME_TICK == event.event_id():
-            #self.__stdout.write(f'Tick {event.timestamp()}.\n')
-            if event.timestamp().mktime() > (self.__activated_at + (self.__active_time_ms / 1000)):
+            #self.__stdout.write(f'Tick {event.timestamp().mktime()} <= .\n')
+            if event.timestamp().mktime() > (self.__activated_at + (self.__active_time_ms // 1000)):
                 self.__stdout.write('Switch to Waiting Mode.\n')
                 self.__motor_stop()
                 return Pferdinand.WAITING
