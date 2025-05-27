@@ -5,9 +5,9 @@ from time import mktime, localtime, time
 class Timestamp:
     def __init__(self):
         # (Jahr, Monat, Tag, Stunde, Minute, Sekunde, Wochentag)
-        self.__value = (0, 0, 0, 0, 0, 0, 0, 0)
+        self.__value = (2000, 0, 0, 0, 0, 0, 0, 0, 0)
         pass
-    
+
     def to_tuple(self) -> tuple:
         return self.__value
 

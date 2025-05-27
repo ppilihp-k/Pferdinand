@@ -21,9 +21,16 @@ class UartOut(IStdOut):
         )
         pass
 
+    def poll(self) -> 'Self':
+        return self
+
     def write(self, msg: str) -> 'Self':
         self.__uart.write(msg)
         return self
+
+    def read(self) -> str:
+        self.__uart.read()
+        pass
 
     pass
 # ---------------------------------------------------------------------------------------------------------------------
