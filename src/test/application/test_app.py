@@ -272,7 +272,7 @@ class UpInputWhileActive(TestCase):
             sleep(1)
 
         self.assertEqual(
-            Motor.IDLE,
+            Motor.UP,
             app.motor().state(),
             f'Motor State was: {app.motor().state()}'
         )
@@ -316,7 +316,7 @@ class DownInputWhileActive(TestCase):
             sleep(1)
 
         self.assertEqual(
-            Motor.IDLE,
+            Motor.DOWN,
             app.motor().state(),
             f'Motor State was: {app.motor().state()}'
         )

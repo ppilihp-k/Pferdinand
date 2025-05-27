@@ -35,6 +35,7 @@ class Pferdinand:
         return self
 
     def __motor_up(self) -> 'Self':
+        self.__stdout.write('Received UP Command.\n')
         self.__event_output_queue.append(
             Event.motor_up_command().set_timestamp(
                 self.__rtc.now(),
@@ -43,6 +44,7 @@ class Pferdinand:
         return self
 
     def __motor_down(self) -> 'Self':
+        self.__stdout.write('Received DOWN Command.\n')
         self.__event_output_queue.append(
             Event.motor_down_command().set_timestamp(
                 self.__rtc.now(),
@@ -51,6 +53,7 @@ class Pferdinand:
         return self
 
     def __motor_stop(self) -> 'Self':
+        self.__stdout.write('Received STOP Command.\n')
         self.__event_output_queue.append(
             Event.motor_stop_command().set_timestamp(
                 self.__rtc.now(),

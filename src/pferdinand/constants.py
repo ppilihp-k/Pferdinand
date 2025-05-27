@@ -13,4 +13,5 @@ PFERDINAND_I2C_RTC_DEVICE_ADDRESS: int = 0x68
 # Digial Input for Switch
 PFERDINAND_SWITCH_INPUT_0: int = 14
 PFERDINAND_SWITCH_INPUT_1: int = 15
+PFERDINAND_INPUT_BUFFER_SIZE: int = 32
 # ---------------------------------------------------------------------------------------------------------------------

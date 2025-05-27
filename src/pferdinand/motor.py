@@ -83,7 +83,6 @@ class Motor:
     def dispatch_event(self) -> 'Self':
         if len(self.__input_queue) > 0:
             event: Event = self.__input_queue.pop()
-            print(f'Motor Event: {event}')
             if self.IDLE == self.__state:
                 self.__state = self.__handle_motor_idle(event)
             elif self.UP == self.__state:
