@@ -16,8 +16,8 @@ Thonny: https://thonny.org
 ### set_time.py
 Das Skript "set_time.py" setzt eine Uhrzeit auf der externen RTC.
 
-## run_app.py
-Das Skript "run_app.py" fuehrt die Std-Anwendung aus.
+## main.py
+Das Skript "main.py" fuehrt die Std-Anwendung aus.
 Die Std-Anwendung schaltet einen Ausgang zu einem vordefinierten Zeitpunkt (Stunde, Minute, Sekunde, -ohne Datum-).
 Zusaetzlich koennen zwei Ausgaenge ueber einen Schalter gesetzt werden. Die Ausgaenge sind gegeneinander verschraenkt und koennen nicht gleichzeitig aktiviert werden.
 Die Anwendung logged ueber einen UART.

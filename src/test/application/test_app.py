@@ -28,6 +28,15 @@ class Initial(TestCase):
             down_output=DigitalOutputMock(),
         )
 
+        self.assertEqual(
+            Motor.IDLE,
+            app.motor().state(),
+        )
+        self.assertEqual(
+            EntangledDigitalInput._00,
+            app.switch().state(),
+        )
+
         for _ in range(0, 2):
             app.event_input_queue().append(
                 Event.time_tick().set_timestamp(

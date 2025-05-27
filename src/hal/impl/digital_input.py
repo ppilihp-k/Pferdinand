@@ -1,3 +1,4 @@
+"""Implementierung fuer digitale Eingaben."""
 # ---------------------------------------------------------------------------------------------------------------------
 from hal.interfaces.idigital_output import IDigitalOutput
 from machine import Pin
@@ -33,8 +34,15 @@ class GpioiBufferedDigitalInput(IDigitalOutput):
 
     def value(self) -> bool:
         value: int= self.__pin.value()
-        self.__buffer = self.__buffer + 1 * value - 1 * (1 - value)
+        self.__buffer = min(
+            self.__buffer_size,
+            max(
+                0,
+                self.__buffer + 1 * value - 1 * (1 - value)
+            )
+        )
         return ((self.__buffer / self.__buffer_size) >= 0.5)
 
     pass
 # ---------------------------------------------------------------------------------------------------------------------
+

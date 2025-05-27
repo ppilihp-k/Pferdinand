@@ -7,10 +7,12 @@ Die offizielle Belegung ist hier zu finden: https://datasheets.raspberrypi.com/p
 Input 0 (Up):   GP14
 
     - Intern als Input mit Pull-Up beschaltet
+    - Grau
 
 Input 1 (Down): GP15
 
     - Intern als Input mit Pull-Up beschaltet
+    - Weiss/Braun
 
 ## Outputs
 

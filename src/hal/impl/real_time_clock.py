@@ -18,6 +18,7 @@ class I2CReadTimeClock(IRealTimeClock):
     def __init__(self, sda_pin_number: int, scl_pin_number: int, i2c_address: int):
         self.__i2c: I2C = I2C(0, sda=Pin(sda_pin_number), scl=Pin(scl_pin_number), freq=100000)
         self.__i2c_address: int = i2c_address
+        # write Address Byte -> Address is 0xf
         print(
             self.__i2c.writeto(
                 self.__i2c_address,
@@ -26,6 +27,7 @@ class I2CReadTimeClock(IRealTimeClock):
                 ),
             )
         )
+        # Read 1 Byte from Address 0xf
         print(
             self.__i2c.readfrom(
                  self.__i2c_address,
