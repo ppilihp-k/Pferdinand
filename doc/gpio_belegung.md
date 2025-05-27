@@ -25,3 +25,10 @@ I2C 0:
 
     - SCL an GP20
     - SDA an GP21
+
+## UART
+
+UART 0:
+
+    - Tx: GP0
+    - Rx: GP1
