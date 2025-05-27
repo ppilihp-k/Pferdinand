@@ -11,7 +11,7 @@ from hal.interfaces.idigital_output import IDigitalOutput
 from hal.impl.digital_output import GpioDigitalOutput
 from hal.impl.digital_input import GpioiBufferedDigitalInput
 from hal.impl.real_time_clock import I2CReadTimeClock, Timestamp
-from time import time, mktime
+from time import time, mktime, ticks_diff, ticks_ms
 from pferdinand.pferdinand import Pferdinand, Event
 from hal.constants.constants import TIMER_TICK
 from machine import Timer
@@ -84,11 +84,16 @@ timer.init(
 
 # Anwendung ausfuehren...
 stdout.write(f'Hello World! Time is {rtc.now()}\n')
+ticks: int = ticks_ms()
+new_ticks: int = 0
 while True:
     led.on()
     app.dispatch_event()
+    new_ticks = ticks_ms()
+    if ticks_diff(new_ticks, ticks) >= 5000:
+        stdout.write(f'Time: {rtc.now()}, Mem {mem_alloc()} / {mem_free()}\n')
+        ticks = new_ticks
     collect()
-    #stdout.write(f'Mem {mem_alloc()} / {mem_free()}\n')
     led.off()
 # ---------------------------------------------------------------------------------------------------------------------
 

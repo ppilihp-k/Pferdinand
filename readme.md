@@ -12,6 +12,17 @@ konform zu der MicroPython Spezifikation sein.
 MicroPython: https://docs.micropython.org/en/latest/library/
 Thonny: https://thonny.org 
 
+## Umgang
+Das System besteht aus einer Hauptplatine mit Raspberry Pi Pico der 2 Relais schaltet. Und einer Nebenplatine die eine Beschaltung zum Anschliessen 
+von 2 Schaltern (UP und DOWN) bereit stellt.
+Auf der Hauptplatine befindet sich eine Batteriegepufferte Real Time Clock (RTC) aus der die Uhrzeit ausgelesen wird.
+Je ein Schalter schaltet einen Ausgang, UP schaltet den UP Ausgang / DOWN schaltet den DOWN Ausgang.
+Die Software verschraenkt die beiden Schalter gegeneinander, so dass nicht beide Ausgaenge gleichzeitig geschaltet werden koennen.
+Wird eine voreingestellte Uhrzeit erreich schaltet die Software den UP Ausgang fuer eine voreingestellte Dauer.
+
+Die Urhzeit wird durch das Ausfuehren eines seperaten Skripts eingestellt.
+Das Skript muss so angepasst werden, dass eine spezifische Uhrzeit per I2C uebertragen wird. Das Skript muss auf dem Raspberry Pi ausgefuehrt werden.
+
 ## Hauptskripte
 ### set_time.py
 Das Skript "set_time.py" setzt eine Uhrzeit auf der externen RTC.
