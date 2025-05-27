@@ -1,3 +1,4 @@
+"""Hier werden Konstanten abgelegt."""
 # ---------------------------------------------------------------------------------------------------------------------
 PFERDINAND_DIGITAL_OUTPUT_0_PIN_NUMBER: int = 2
 PFERDINAND_DIGITAL_OUTPUT_1_PIN_NUMBER: int = 3

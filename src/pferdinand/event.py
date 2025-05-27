@@ -1,7 +1,11 @@
+"""Ein Event.
 
+Diese Klasse kapselt Informationen zu einem aufgetretenden Event, wie Zeitstempel und Id.
+"""
 # ---------------------------------------------------------------------------------------------------------------------
 from hal.interfaces.types import Timestamp
 # ---------------------------------------------------------------------------------------------------------------------
+
 class Event:
 
     TIME_TICK: int = 0

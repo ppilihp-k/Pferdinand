@@ -1,3 +1,7 @@
+"""Implementierung der Anwendungslogik.
+
+Diese Klasse interagiert mit Schaltern und einem Motor.
+"""
 # ---------------------------------------------------------------------------------------------------------------------
 from hal.interfaces.types import Timestamp
 from hal.interfaces.istdout import IStdOut

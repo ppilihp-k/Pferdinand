@@ -1,4 +1,7 @@
+"""Ein Motor.
 
+Diese Klasse kapselt den Zugriff auf einen externen Motor der ueber GPIO Output gesteuert wird.
+"""
 # ---------------------------------------------------------------------------------------------------------------------
 from pferdinand.event import Event
 from hal.interfaces.idigital_output import IDigitalOutput

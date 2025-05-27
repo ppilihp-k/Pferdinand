@@ -1,3 +1,4 @@
+"""Wrapper fuer die Initialisierung und Ausfuehrung der Anwendung."""
 # ---------------------------------------------------------------------------------------------------------------------
 from time import sleep
 from hal.impl.entangled_digital_input import EntangledDigitalInput, EntangledCallback
@@ -22,6 +23,7 @@ from hal.interfaces.types import Timestamp
 # ---------------------------------------------------------------------------------------------------------------------
 
 class SwitchCallback(EntangledCallback):
+    """Dies soll eine private Klasse sein, die nur von der App verwendet werden."""
 
     def __init__(self, event_output_queue: list, rtc: IRealTimeClock):
         self.__rtc: IRealTimeClock = rtc
@@ -110,6 +112,12 @@ class App:
         return self
 
     def dispatch_event(self) -> 'Self':
+        """Fuehrt einen Dispatchzyklus durch.
+
+        1. Eingaben pruefen
+        2. Anwendung reagieren lassen
+        3. Ausgaenge schalten
+        """
         self.__switch.dispatch_event()
         self.__pferdinant.dispatch_event()
         self.__motor.dispatch_event()

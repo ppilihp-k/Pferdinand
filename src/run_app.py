@@ -1,3 +1,7 @@
+"""Dies ist ein Startskript.
+
+Das Skript initialisiert die Hardware und die Anwendung.
+"""
 # ---------------------------------------------------------------------------------------------------------------------
 from hal.impl.led import OnBoardLed
 from hal.impl.stdout import UartOut
@@ -26,13 +30,18 @@ from application.app import App
 # ---------------------------------------------------------------------------------------------------------------------
 
 # Hardware Initialisieren...
+
+# UART Out.
 stdout: IStdOut = UartOut()
+# On Board LED die Blinkt.
 led: OnBoardLed = OnBoardLed()
+# Initialisierung der Echtzeituhr.
 rtc: IRealTimeClock = I2CReadTimeClock(
     sda_pin_number=PFERDINAND_I2C_RTC_SDA_PIN,
     scl_pin_number=PFERDINAND_I2C_RTC_SCL_PIN,
     i2c_address=PFERDINAND_I2C_RTC_DEVICE_ADDRESS,
 )
+# Digitale Outputs.
 digital_output_pin_0: IDigitalOutput = GpioDigitalOutput(
     PFERDINAND_DIGITAL_OUTPUT_0_PIN_NUMBER,
 )
@@ -40,12 +49,7 @@ digital_output_pin_1: IDigitalOutput = GpioDigitalOutput(
     PFERDINAND_DIGITAL_OUTPUT_1_PIN_NUMBER,
 )
 
-#
-# Pull-Up on Inputpin.
-#	Default: 1
-#	Switch on -> 0
-#
-
+# Die Anwendung zur Steuerung und Koordination der Ein- und Ausgaben.
 app: App = App(
     stdout=stdout,
     rtc=rtc,
@@ -61,6 +65,7 @@ app: App = App(
     down_output=digital_output_pin_1,
 )
 
+# Weitere Hardware initialisieren...
 def callback(t):
     app.event_input_queue().append(
         Event.time_tick().set_timestamp(
@@ -69,7 +74,6 @@ def callback(t):
     )
     pass
 
-# Weitere Hardware initialisieren...
 # (Timer darf nicht los laufen bevor nicht die Anwendung initialisiert wurde)
 timer: Timer = Timer()
 timer.init(
@@ -84,7 +88,7 @@ while True:
     led.on()
     app.dispatch_event()
     collect()
-    print(f'Mem {mem_alloc()} / {mem_free()}')
+    self.__stdout.write(f'Mem {mem_alloc()} / {mem_free()}\n')
     led.off()
 # ---------------------------------------------------------------------------------------------------------------------
 
