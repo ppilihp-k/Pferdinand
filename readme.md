@@ -12,9 +12,15 @@ konform zu der MicroPython Spezifikation sein.
 MicroPython: https://docs.micropython.org/en/latest/library/
 Thonny: https://thonny.org 
 
+## Hauptskripte
+### set_time.py
 Das Skript "set_time.py" setzt eine Uhrzeit auf der externen RTC.
 
-Das Skript "run_app.py" fuehrt die App aus.
+## run_app.py
+Das Skript "run_app.py" fuehrt die Std-Anwendung aus.
+Die Std-Anwendung schaltet einen Ausgang zu einem vordefinierten Zeitpunkt (Stunde, Minute, Sekunde, -ohne Datum-).
+Zusaetzlich koennen zwei Ausgaenge ueber einen Schalter gesetzt werden. Die Ausgaenge sind gegeneinander verschraenkt und koennen nicht gleichzeitig aktiviert werden.
+Die Anwendung logged ueber einen UART.
 
 ## test/
 Tests fuer den Source Code.
@@ -30,3 +36,6 @@ Testdiscovery und Ausfuehrung.
     python -m unittest
 
 Siehe auch https://docs.python.org/3/library/unittest.html
+
+## doc/
+Hier liegt die Dokumentation ab.
