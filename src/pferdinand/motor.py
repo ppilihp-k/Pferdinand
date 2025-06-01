@@ -5,6 +5,7 @@ Diese Klasse kapselt den Zugriff auf einen externen Motor der ueber GPIO Output 
 # ---------------------------------------------------------------------------------------------------------------------
 from pferdinand.event import Event
 from hal.interfaces.idigital_output import IDigitalOutput
+from hal.interfaces.istdout import IStdOut
 # ---------------------------------------------------------------------------------------------------------------------
 
 class Motor:
@@ -18,11 +19,13 @@ class Motor:
         input_queue: list,
         up: IDigitalOutput,
         down: IDigitalOutput,
+        stdout: IStdOut,
     ):
         self.__input_queue: list = input_queue
         self.__up: IDigitalOutput = up
         self.__down: IDigitalOutput = down
         self.__state: int = self.IDLE
+        self.__stdout: IStdOut = stdout
         pass
 
     def state(self) -> int:
@@ -31,16 +34,19 @@ class Motor:
     def __motor_up(self) -> 'Self':
         self.__down.set(False)
         self.__up.set(True)
+        self.__stdout.write('Motor: Up\n')
         return self
 
     def __motor_down(self) -> 'Self':
         self.__up.set(False)
         self.__down.set(True)
+        self.__stdout.write('Motor: Down\n')
         return self
 
     def __motor_stop(self) -> 'Self':
         self.__up.set(False)
         self.__down.set(False)
+        self.__stdout.write('Motor: Stop\n')
         return self
 
     def __handle_motor_up(self, event: Event) -> int:

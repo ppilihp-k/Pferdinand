@@ -104,6 +104,7 @@ class App:
             input_queue=self.__event_output_queue,
             up=up_output,
             down=down_output,
+            stdout=stdout,
         )
         pass
 
